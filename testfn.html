@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>test seajs</title>
+
+</head>
+<body>
+	<div id="test">test_txt</div>
+<script type="text/javascript">
+	// function Box(){
+	// 	this.name = 'lee';
+	// }
+	// function Desk(){
+	// 	this.age = 100;
+	// }
+	// Desk.prototype = new Box();
+	// var desk = new Desk();
+
+	// function Box(){
+	// 	this.name = 'lee'; 
+	// }
+	// Box.prototype.name  = 'ml';
+	// function Desk(){
+	// 	this.age = 100;
+	// }
+	// Desk.prototype = new Box();
+	// var box = new Box();
+	// var desk = new Desk(); 
+	// console.log(box.name,desk.name); 
+	//lee,lee 就近原则，先拿到构造函数中的name属性
+
+	// function Box(){
+	// 	// this.name = 'lee';
+	// 	//当构造函数中没有时，去拿原型中的name属性
+	// }
+	// Box.prototype.name  = 'ml';
+	// function Desk(){
+	// 	this.age = 100;
+	// }
+	// Desk.prototype = new Box();
+	// var box = new Box();
+	// var desk = new Desk();
+	// console.log(box.name,desk.name);
+
+	//使用对象冒充继承,只能继承构造函数中的信息
+	// function Box(name,age){
+	// 	this.name = name;
+	// 	this.age = age;
+	// 	this.family = ['gg','jj','mm'];
+	// }
+	// function Desk(name,age){
+	// 	Box.call(this,name,age);
+	// }
+	// var desk = new Desk('lee',100);
+	// console.log(desk.name,desk.family); //lee ["gg", "jj", "mm"]
+	// desk.family.push('dd');
+	// console.log(desk.name,desk.family); //lee ["gg", "jj", "mm", "dd"]
+	// var desk1 = new Desk('ss',200);
+	// console.log(desk1.name,desk1.family); //ss ["gg", "jj", "mm"]
+
+	// function Box(name,age){
+	// 	var obj = new Object();
+	// 	obj.name = name;
+	// 	obj.age = age;
+	// 	obj.run = function(){
+	// 		return this.name + this.age + ' go...';
+	// 	}
+	// 	return obj;
+	// }
+	// var box1 = new Box('lee',100);
+	// console.log(box1.run());
+	// var box2 = new Box('kee',200);
+	// console.log(box2.run());
+
+
+	//对象冒充
+	// function Box(name,age){
+	// 	this.name = name;
+	// 	this.age = age;
+	// }
+	// Box.prototype.family = '家庭';
+	// function Desk(name,age){
+	// 	Box.call(this,name,age);
+	// }
+	// var desk = new Desk('lee',100);
+	// alert(desk.name);//lee
+	// alert(desk.family);//undefined  对象冒充拿不到原型中的数据
+
+	// function Box(name,age){
+	// 	this.name = name;
+	// 	this.age = age;
+	// 	this.family = ['gg','jj','mm'];
+	// }
+	// Box.prototype.run = function(){
+	// 	return this.name + this.age + 'go...';
+	// };
+	// function Desk(name,age){
+	// 	Box.call(this,name,age);
+	// }
+	// Desk.prototype = new Box();  //实例化后的Box()赋值给原型
+	// var desk = new Desk('lee',100);
+	// alert(desk.name);//lee
+	// alert(desk.run());//lee100go...
+
+
+	// function obj(o){
+	// 	function F(){}
+	// 	F.prototype = o;
+	// 	return new F();
+	// }
+	// function create(o){
+	// 	var f = obj(o);
+	// 	return f;
+	// }
+	// var box = {
+	// 	name : 'lee',
+	// 	age : 100,
+	// 	family : ['gg','jj','mm']
+	// };
+	// var box1 = create(box);
+	// alert(box1.family);
+	// box1.family.push('dd');
+	// alert(box1.family);
+	// alert(box.family);
+	// var box2 = create(box);
+	// alert(box2.family);
+
+	// function box(){
+	// 	var arr = [];
+	// 	for(var i = 0; i < 5; i++){
+	// 		arr[i] = (function(num){
+	// 			return num;
+	// 		})(i);
+	// 	}
+	// 	return arr;
+	// }
+	// var b = box();
+	// for(var i = 0; i < 5; i++){
+	// 	alert(b[i]);
+	// }
+
+	// function box(){
+	// 	var arr = [];
+	// 	for(var i = 0; i < 5; i++){
+	// 		arr[i] = (function(num){
+	// 			return function(){
+	// 				return num;
+	// 			}
+	// 		})(i);
+	// 	}
+	// 	return arr;
+	// }
+	// var b = box();
+	// for(var i = 0; i < 5; i++){
+	// 	alert(b[i]());
+	// }
+
+	// var box = {
+	// 	user : 'the box',
+	// 	getUser : function(){
+	// 		var that = this;
+	// 		return function(){
+	// 			return that.user;
+	// 		}
+	// 	}
+	// }
+	// alert(box.getUser()());
+
+	// function box(){
+	// 	(function(){
+	// 		for(var i=0;i<5;i++){
+	// 			console.log(i,1);
+	// 		}
+	// 	})();
+	// 	console.log(i,2);// i is not defined
+	// }
+	// box();
+
+	// var box = function(){
+	// 	var user = 'lee';
+	// 	function run (){
+	// 		return ' run...';
+	// 	}
+	// 	return {
+	// 		publicGo : function(){
+	// 			return user + run();
+	// 		}
+	// 	};
+	// }();
+	// alert(box.publicGo());
+
+	// 新建一个构造函数，返回一个实体
+	// function Desk(){};
+	// var box = function(){
+	// 	var user = 'lee';
+	// 	function run (){
+	// 		return ' run...';
+	// 	}
+	// 	var desk = new Desk();
+	// 	desk.publicGo = function(){
+	// 			return user + run();
+	// 		};
+	// 	return desk;
+	// }();
+	// alert(box.publicGo());
+
+	alert(document.getElementById("test").innerHTML);
+
+</script>
+
+</body>
+</html>
