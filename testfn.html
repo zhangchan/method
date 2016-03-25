@@ -6,7 +6,17 @@
 
 </head>
 <body>
+	<button id="btn">click</button>
 	<div id="test">test_txt</div>
+	<div id="menu">
+		<ul>
+			<li><a href="#">click to qq</a></li>
+			<li><a href="#">click to baidu</a></li>
+			<li><a href="#">click to 360</a></li>
+			<li><a href="#">close chrome</a></li>
+			<li><a href="">reload</a></li>
+		</ul>
+	</div>
 <script type="text/javascript">
 	// function Box(){
 	// 	this.name = 'lee';
@@ -74,7 +84,7 @@
 	// console.log(box2.run());
 
 
-	//对象冒充
+	// //对象冒充
 	// function Box(name,age){
 	// 	this.name = name;
 	// 	this.age = age;
@@ -205,9 +215,117 @@
 	// }();
 	// alert(box.publicGo());
 
-	alert(document.getElementById("test").innerHTML);
+	// alert(document.getElementById("test").innerHTML);
 
+	// 鼠标按钮
+	// function getButton(evt){
+	// 	console.log(evt);
+	// 	var e = evt || window.event;
+	// 	if (evt) {
+	// 		return e.button;
+	// 	}else if(window.event){
+	// 		switch(e.button){
+	// 			case 1:
+	// 			return 0;break;
+	// 			case 4:
+	// 			return 1;break;
+	// 			case 2:
+	// 			return 2;break;
+	// 		}
+	// 	}
+	// }
+	// document.onmousedown = function(evt){
+	// 	if (getButton(evt) == 0) {
+	// 		alert("left");
+	// 	}
+	// 	if (getButton(evt) == 1) {
+	// 		alert("middle");
+	// 	}
+	// 	if (getButton(evt) == 2) {
+	// 		alert("right");
+	// 	}
+	// }
+
+	// 再次使用 window.onload
+	// window.onload =function(){
+	// 	console.log("1");
+	// }
+	// if (typeof window.onload == "function") {
+	// 	var saved = null; 
+	// 	saved = window.onload; //保存上一个事件对象
+	// 	console.log(saved);
+	// }
+	// window.onload =function(){
+	// 	saved();
+	// 	console.log("2");
+	// }
+
+	// 添加事件函数
+	function addEvent(obj, type, fn){
+		var saved = null;
+		if(typeof obj["on" + type] == "function"){
+			saved = obj["on" + type];
+		}
+		obj["on" + type] = function () {
+			if(saved)saved();
+			fn();
+		}
+	}
+	// addEvent(document.getElementById("btn"),"click",function(){
+	// 	alert("click");
+	// });
+
+	// 鼠标右键
+// 	function preDef(evt){
+// 		var e = evt || window.event;
+// 		if(e.preventDefault){
+// 			e.preventDefault();
+// 		}else{
+// 			e.returnVaule = false;
+// 		}
+// 	}
+// 	var left = 0,tt = 0;
+// 	document.onmousedown = function(evt){
+// 		left = evt.clientX;
+// 		ttop = evt.clientY;
+// 	}
+
+// 	addEvent(document,"contextmenu",function(evt){
+// 		preDef(evt);
+// 		var menu = document.getElementById('menu');
+// 		menu.style.left = left + "px";
+// 		menu.style.top = ttop + "px";
+// 		menu.style.display = "block";
+// 	});
+// 	function hideMenu() {
+// 		var menu = document.getElementById('menu');
+//         menu.style.display = "none";
+//     }  
+// 	addEvent(document,"click",hideMenu);
+
+ //名值对转换成字符串
+//  function params(data){
+//  	var arr = [];
+//  	for(key in data){
+//  		arr.push(encodeURIComponent(key)+":"+encodeURIComponent(data[key]));
+//  	}
+//  	return arr.join("&");
+
+//  }
+// console.log(params({
+// 	"na1:me" : "wos:na,me",
+// 	"age" : 23,
+// 	"szd" : "sh"
+// }));
+// // na1%3Ame:wos%3Ana%2Cme&age:23&szd:sh
 </script>
-
+<style type="text/css">
+#menu{width:180px;height:175px;background:#eee;border:1px solid #333;position : absolute;display: none;/*visibility : hidden;*/
+        }
+#menu ul{margin: 0;padding: 0;}
+#menu ul li{ width: 100%; height: 35px; line-height: 35px;list-style-type: none; text-align: left; }
+#menu ul li a{ text-decoration: none;width: 90%;padding-left: 10%;display: block; height: 100%;color: #666; font-size: 16px; font-weight: bold;}
+#menu ul li a:hover{background: #aaa; color: #eee;}
+</style>
 </body>
 </html>
